@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TaskNotFoundException.class)
     public ResponseEntity<ErrorDto> handleTaskNotFoundException(TaskNotFoundException ex) {
         UUID id = ex.getId();
-        String errorMessage = String.format("Task with ID '%s' not found.");
+        String errorMessage = String.format("Task with ID '%s' not found.", id);
         ErrorDto errorDto = new ErrorDto(errorMessage);
 
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
