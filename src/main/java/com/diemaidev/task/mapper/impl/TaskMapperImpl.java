@@ -1,8 +1,10 @@
 package com.diemaidev.task.mapper.impl;
 
 import com.diemaidev.task.domain.CreateTaskRequest;
+import com.diemaidev.task.domain.UpdateTaskRequest;
 import com.diemaidev.task.domain.dto.CreateTaskRequestDto;
 import com.diemaidev.task.domain.dto.TaskDto;
+import com.diemaidev.task.domain.dto.UpdateTaskRequestDto;
 import com.diemaidev.task.domain.entity.Task;
 import com.diemaidev.task.mapper.TaskMapper;
 import org.springframework.stereotype.Component;
@@ -11,12 +13,23 @@ import org.springframework.stereotype.Component;
 public class TaskMapperImpl implements TaskMapper {
 
     @Override
-    public CreateTaskRequest fromDto(CreateTaskRequestDto request) {
+    public CreateTaskRequest fromDto(CreateTaskRequestDto dto) {
         return new CreateTaskRequest(
-                request.title(),
-                request.description(),
-                request.dueDate(),
-                request.priority()
+                dto.title(),
+                dto.description(),
+                dto.dueDate(),
+                dto.priority()
+        );
+    }
+
+    @Override
+    public UpdateTaskRequest fromDto(UpdateTaskRequestDto dto) {
+        return new UpdateTaskRequest(
+                dto.title(),
+                dto.description(),
+                dto.dueDate(),
+                dto.priority(),
+                dto.status()
         );
     }
 

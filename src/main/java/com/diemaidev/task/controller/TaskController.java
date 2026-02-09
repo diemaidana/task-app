@@ -1,8 +1,10 @@
 package com.diemaidev.task.controller;
 
 import com.diemaidev.task.domain.CreateTaskRequest;
+import com.diemaidev.task.domain.UpdateTaskRequest;
 import com.diemaidev.task.domain.dto.CreateTaskRequestDto;
 import com.diemaidev.task.domain.dto.TaskDto;
+import com.diemaidev.task.domain.dto.UpdateTaskRequestDto;
 import com.diemaidev.task.domain.entity.Task;
 import com.diemaidev.task.mapper.TaskMapper;
 import com.diemaidev.task.service.TaskService;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/tasks")
@@ -40,5 +43,18 @@ public class TaskController {
                 .toList();
 
         return ResponseEntity.ok(tasksDto);
+    }
+
+    @PutMapping(path = "/{taskId}")
+    public ResponseEntity<TaskDto> updateTask(
+            @PathVariable UUID taskId,
+            @Valid @RequestBody UpdateTaskRequestDto requestDto
+    ) {
+        UpdateTaskRequest updateTaskRequest = taskMapper.fromDto(requestDto);
+        Task task = taskService.updateTask(taskId, updateTaskRequest);
+
+        TaskDto taskDto = taskMapper.toDto(task);
+
+        return ResponseEntity.ok(taskDto);
     }
 }
